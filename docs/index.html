@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Binaris — AI Reverse Engineering</title>
+  <meta name="description" content="Binaris is an AI-powered reverse engineering platform with evidence-bound chat, malware intel, graphs, and DFIR reports." />
+  <link rel="icon" href="assets/binaris-logo.png" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg0: #070b12;
+      --bg1: #0e1624;
+      --ink: #e8eef7;
+      --muted: #9aadc2;
+      --accent: #3ecf8e;
+      --accent2: #5b9fd4;
+      --line: rgba(148, 180, 210, 0.22);
+      --card: rgba(18, 28, 44, 0.72);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "IBM Plex Sans", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(62, 207, 142, 0.16), transparent 55%),
+        radial-gradient(800px 480px at 90% 0%, rgba(91, 159, 212, 0.18), transparent 50%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, #0a1018);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1080px, calc(100% - 2rem)); margin: 0 auto; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 0; border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; gap: .75rem; align-items: center; font-weight: 700; letter-spacing: .02em; }
+    .brand img { width: 40px; height: 40px; }
+    nav { display: flex; gap: 1rem; flex-wrap: wrap; font-size: .95rem; }
+    .hero { padding: 4.5rem 0 3rem; }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.08; margin: 0 0 1rem;
+      letter-spacing: -0.03em;
+    }
+    .hero p { color: var(--muted); font-size: 1.1rem; max-width: 42rem; margin: 0 0 1.75rem; }
+    .cta { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: .7rem 1.1rem; border-radius: 10px; font-weight: 600;
+      border: 1px solid transparent; text-decoration: none !important;
+    }
+    .btn-primary { background: var(--accent); color: #04140c; }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+    section { padding: 2.25rem 0; }
+    h2 { font-size: 1.55rem; margin: 0 0 1rem; letter-spacing: -0.02em; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 1.1rem 1.15rem;
+      backdrop-filter: blur(8px);
+    }
+    .card h3 { margin: 0 0 .4rem; font-size: 1.05rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .94rem; }
+    .diagram {
+      background: rgba(8, 14, 22, 0.85); border: 1px solid var(--line);
+      border-radius: 14px; padding: 1rem; overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+    th, td { text-align: left; padding: .65rem .5rem; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 600; }
+    footer {
+      margin-top: 2rem; padding: 1.5rem 0 2.5rem;
+      border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem;
+    }
+    code { font-family: ui-monospace, Consolas, monospace; font-size: .9em; color: #b7f0d1; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <img src="assets/binaris-logo.png" alt="Binaris logo" />
+        <span>Binaris</span>
+      </div>
+      <nav>
+        <a href="#architecture">Architecture</a>
+        <a href="#live">Live</a>
+        <a href="#quickstart">Quick start</a>
+        <a href="https://github.com/Ayushkumarsingh09/Binaris">GitHub</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Reverse binaries with evidence-bound AI</h1>
+      <p>
+        Binaris is a production-minded RE platform: real PE/ELF/Mach-O analysis,
+        Capstone disassembly, malware &amp; crypto engines, network intel, graphs,
+        and chat that must cite what it found in the binary.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/Ayushkumarsingh09/Binaris">View source</a>
+        <a class="btn btn-ghost" id="workspace-link" href="#live">Open workspace</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid">
+        <div class="card"><h3>Static engines</h3><p>Hashes, packers, imports/exports, strings/IOCs, Capstone disasm, compiler heuristics.</p></div>
+        <div class="card"><h3>AI with receipts</h3><p>Rename and chat grounded in Evidence objects—no invented symbols.</p></div>
+        <div class="card"><h3>Threat intel</h3><p>Malware families, weak crypto, GeoIP/RDAP, C2 heuristics, DFIR exports.</p></div>
+        <div class="card"><h3>Ops ready</h3><p>Docker, K8s, OAuth hooks, snapshots/diff, Python &amp; Rust SDKs, CI.</p></div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <h2>Architecture</h2>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart LR
+  Analyst --> Web[Next.js]
+  Analyst --> SDK[SDKs]
+  Web --> API[Axum API]
+  SDK --> API
+  API --> Store[(Storage)]
+  API --> DB[(Postgres/Memory)]
+  API --> Pipe[Pipeline]
+  Pipe --> Engines[Analysis Engines]
+  Engines --> Reports[Reports + Graphs]
+  Engines --> AI[Evidence Index + Chat]
+        </pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Analysis pipeline</h2>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart TD
+  Upload --> Hash
+  Hash --> Identify
+  Identify --> Static
+  Static --> Disasm
+  Disasm --> Graphs
+  Graphs --> Security
+  Security --> Malware
+  Malware --> Network
+  Network --> Reports
+  Reports --> ChatIndex[Chat index]
+        </pre>
+      </div>
+    </section>
+
+    <section id="live">
+      <h2>Live deployment</h2>
+      <table>
+        <thead><tr><th>Surface</th><th>Link</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Landing / docs (this page)</td>
+            <td><a href="https://ayushkumarsingh09.github.io/Binaris/">ayushkumarsingh09.github.io/Binaris</a></td>
+          </tr>
+          <tr>
+            <td>Web workspace</td>
+            <td><a id="live-web" href="https://github.com/Ayushkumarsingh09/Binaris#live-deployment">Deploying… check README</a></td>
+          </tr>
+          <tr>
+            <td>API</td>
+            <td><a id="live-api" href="https://github.com/Ayushkumarsingh09/Binaris#live-deployment">Deploying… check README</a></td>
+          </tr>
+          <tr>
+            <td>Repository</td>
+            <td><a href="https://github.com/Ayushkumarsingh09/Binaris">github.com/Ayushkumarsingh09/Binaris</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="color:var(--muted);margin-top:1rem">
+        Demo login for self-hosted: <code>demo@binaris.dev</code> / <code>demo-password-change-me</code>
+      </p>
+    </section>
+
+    <section id="quickstart">
+      <h2>Quick start</h2>
+      <div class="card">
+        <pre style="margin:0;white-space:pre-wrap;color:var(--muted)">git clone https://github.com/Ayushkumarsingh09/Binaris.git
+cd Binaris
+docker compose up --build
+# Web http://localhost:3000  ·  API http://localhost:8080/healthz</pre>
+      </div>
+    </section>
+
+    <footer>
+      Binaris · MIT License · Analyze only what you are authorized to inspect.
+    </footer>
+  </div>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "loose" });
+    // Optional overrides written by deploy script into live-links.js
+    fetch("live-links.js").then(() => {}).catch(() => {});
+  </script>
+  <script src="live-links.js"></script>
+</body>
+</html>
