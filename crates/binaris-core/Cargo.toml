@@ -1,0 +1,17 @@
+[package]
+name = "binaris-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Binaris domain types, errors, and shared contracts"
+
+[dependencies]
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+uuid = { workspace = true }
+hex = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
