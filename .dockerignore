@@ -1,0 +1,13 @@
+**/target
+**/node_modules
+**/.next
+**/data
+.git
+**/.turbo
+**/dist
+**/*.log
+apps/web/node_modules
+apps/web/.next
+docs
+.github
+**/.DS_Store
