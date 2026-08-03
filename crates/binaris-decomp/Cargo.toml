@@ -1,0 +1,21 @@
+[package]
+name = "binaris-decomp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Decompiler adapters: Capstone pseudocode, Ghidra, Rizin, radare2, Keystone, Tree-sitter"
+
+[dependencies]
+binaris-core = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tempfile = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+regex = { workspace = true }
+hex = { workspace = true }
+once_cell = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
