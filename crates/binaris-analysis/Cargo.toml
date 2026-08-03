@@ -1,0 +1,35 @@
+[package]
+name = "binaris-analysis"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Static binary analysis engine for Binaris"
+
+[dependencies]
+binaris-core = { workspace = true }
+anyhow = { workspace = true }
+blake3 = { workspace = true }
+byteorder = { workspace = true }
+capstone = { workspace = true }
+flate2 = { workspace = true }
+goblin = { workspace = true }
+hex = { workspace = true }
+infer = { workspace = true }
+md-5 = { workspace = true }
+memchr = { workspace = true }
+object = { workspace = true }
+once_cell = { workspace = true }
+regex = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sha1 = { workspace = true }
+sha2 = { workspace = true }
+sha3 = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+zip = { workspace = true }
+rayon = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
