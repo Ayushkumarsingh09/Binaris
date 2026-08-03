@@ -1,0 +1,23 @@
+[package]
+name = "binaris-pipeline"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "End-to-end analysis pipeline orchestration for Binaris"
+
+[dependencies]
+binaris-core = { workspace = true }
+binaris-analysis = { workspace = true }
+binaris-ai = { workspace = true }
+binaris-malware = { workspace = true }
+binaris-security = { workspace = true }
+binaris-graphs = { workspace = true }
+binaris-reports = { workspace = true }
+binaris-decomp = { workspace = true }
+binaris-network = { workspace = true }
+anyhow = { workspace = true }
+chrono = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+tokio = { workspace = true }
+uuid = { workspace = true }
