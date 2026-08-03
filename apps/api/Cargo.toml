@@ -1,0 +1,40 @@
+[package]
+name = "binaris-api"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Binaris HTTP/WebSocket API"
+
+[[bin]]
+name = "binaris-api"
+path = "src/main.rs"
+
+[dependencies]
+binaris-core = { workspace = true }
+binaris-auth = { workspace = true }
+binaris-db = { workspace = true }
+binaris-storage = { workspace = true }
+binaris-pipeline = { workspace = true }
+binaris-ai = { workspace = true }
+binaris-analysis = { workspace = true }
+binaris-diff = { workspace = true }
+binaris-decomp = { workspace = true }
+anyhow = { workspace = true }
+axum = { workspace = true }
+chrono = { workspace = true }
+clap = { workspace = true }
+futures = { workspace = true }
+http = { workspace = true }
+redis = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+uuid = { workspace = true }
+bytes = { workspace = true }
+utoipa = { workspace = true }
+utoipa-swagger-ui = { workspace = true }
