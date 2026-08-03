@@ -1,0 +1,26 @@
+app = "binaris-api"
+primary_region = "iad"
+
+[build]
+  dockerfile = "infra/docker/Dockerfile.api"
+
+[env]
+  BINARIS_API_HOST = "0.0.0.0"
+  BINARIS_API_PORT = "8080"
+  BINARIS_INLINE_ANALYZE = "true"
+  BINARIS_STORAGE_BACKEND = "local"
+  BINARIS_STORAGE_PATH = "/data/objects"
+  BINARIS_AI_PROVIDER = "local"
+  RUST_LOG = "info"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  memory = "2gb"
+  cpu_kind = "shared"
+  cpus = 2

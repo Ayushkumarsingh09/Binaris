@@ -1,0 +1,112 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: binaris
+      POSTGRES_PASSWORD: binaris
+      POSTGRES_DB: binaris
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./migrations/001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U binaris"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: binaris
+      MINIO_ROOT_PASSWORD: binarissecret
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.api
+    environment:
+      BINARIS_API_HOST: 0.0.0.0
+      BINARIS_API_PORT: 8080
+      BINARIS_JWT_SECRET: change-me-in-production-use-long-secret
+      BINARIS_INLINE_ANALYZE: "true"
+      BINARIS_STORAGE_BACKEND: local
+      BINARIS_STORAGE_PATH: /data/objects
+      DATABASE_URL: postgres://binaris:binaris@postgres:5432/binaris
+      REDIS_URL: redis://redis:6379
+      RUST_LOG: info
+    ports:
+      - "8080:8080"
+    volumes:
+      - objects:/data/objects
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.worker
+    environment:
+      DATABASE_URL: postgres://binaris:binaris@postgres:5432/binaris
+      REDIS_URL: redis://redis:6379
+      BINARIS_STORAGE_BACKEND: local
+      BINARIS_STORAGE_PATH: /data/objects
+      RUST_LOG: info
+    volumes:
+      - objects:/data/objects
+    depends_on:
+      - api
+      - redis
+      - postgres
+    profiles: ["async"]
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.web
+    environment:
+      NEXT_PUBLIC_BINARIS_API_URL: http://127.0.0.1:8080
+      BINARIS_API_URL: http://api:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    volumes:
+      - ./infra/docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    profiles: ["obs"]
+
+  grafana:
+    image: grafana/grafana:11.1.0
+    ports:
+      - "3001:3000"
+    profiles: ["obs"]
+
+volumes:
+  pgdata:
+  miniodata:
+  objects:
