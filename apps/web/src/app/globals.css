@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0f14;
+  --panel: #111822;
+  --line: #243041;
+  --text: #e6edf3;
+  --muted: #8b9bb0;
+  --accent: #22d3ee;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+body {
+  background-image: theme("backgroundImage.aurora");
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.35);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a3648;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.panel {
+  @apply bg-ink-850/90 border border-ink-600 shadow-panel backdrop-blur-md;
+}
+
+.kbd {
+  @apply inline-flex items-center rounded border border-ink-600 bg-ink-800 px-1.5 py-0.5 font-mono text-[10px] text-slate-300;
+}
