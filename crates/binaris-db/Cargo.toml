@@ -1,0 +1,21 @@
+[package]
+name = "binaris-db"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Persistence layer for Binaris (Postgres + in-memory)"
+
+[dependencies]
+binaris-core = { workspace = true }
+binaris-diff = { workspace = true }
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+chrono = { workspace = true }
+dashmap = { workspace = true }
+parking_lot = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sqlx = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
