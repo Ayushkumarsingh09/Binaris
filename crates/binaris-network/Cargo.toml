@@ -1,0 +1,19 @@
+[package]
+name = "binaris-network"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Network indicator enrichment: GeoIP, WHOIS, ASN, TLS, C2 heuristics"
+
+[dependencies]
+binaris-core = { workspace = true }
+anyhow = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+tokio = { workspace = true }
+url = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
