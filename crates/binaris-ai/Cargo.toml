@@ -1,0 +1,20 @@
+[package]
+name = "binaris-ai"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Evidence-grounded AI semantic engine and chat for Binaris"
+
+[dependencies]
+binaris-core = { workspace = true }
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tokio = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
