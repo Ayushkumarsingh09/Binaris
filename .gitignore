@@ -21,4 +21,6 @@ snap.json
 *.bin
 .vercel
 .fly
+**/*.tsbuildinfo
+**/.vercel
 
