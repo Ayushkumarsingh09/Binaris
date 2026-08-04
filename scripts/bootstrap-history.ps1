@@ -10,8 +10,17 @@ function Commit([string]$message, [string[]]$paths) {
     Write-Host "SKIP (nothing staged): $message"
     return
   }
-  # Explicit single-author commit message — never add Co-authored-by
   git -c trailer.ifexists=doNothing commit --no-verify -m $message
+  # Strip any injected trailers after commit
+  $body = git log -1 --format=%B
+  $clean = ($body -split "`n" | Where-Object { $_ -notmatch '(?i)^Co-authored-by:' }) -join "`n"
+  $clean = $clean.TrimEnd() + "`n"
+  if ($body -ne $clean) {
+    $tmp = New-TemporaryFile
+    Set-Content -Path $tmp -Value $clean -NoNewline
+    git commit --amend --no-verify -F $tmp.FullName
+    Remove-Item $tmp
+  }
   Write-Host "OK: $message"
 }
 
