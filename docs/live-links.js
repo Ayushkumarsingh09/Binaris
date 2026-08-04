@@ -1,8 +1,8 @@
 /* Updated by deploy scripts with hosted Vercel / Fly URLs */
 (function () {
   const links = {
-    web: null, // e.g. "https://binaris.vercel.app"
-    api: null, // e.g. "https://binaris-api.fly.dev"
+    web: "https://binaris-nine.vercel.app",
+    api: null, // Fly.io deploy requires billing; run API via Docker locally
   };
   const webEl = document.getElementById("live-web");
   const apiEl = document.getElementById("live-api");

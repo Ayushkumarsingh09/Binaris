@@ -20,8 +20,8 @@
 | Surface | URL |
 |---|---|
 | **Product landing + docs** | [https://ayushkumarsingh09.github.io/Binaris/](https://ayushkumarsingh09.github.io/Binaris/) |
-| **Web workspace (hosted)** | See [Live deployment](#live-deployment) after Vercel publish |
-| **API health (hosted)** | See [Live deployment](#live-deployment) after Fly publish |
+| **Web workspace** | [https://binaris-nine.vercel.app](https://binaris-nine.vercel.app) |
+| **API** | Self-host with Docker (`docker compose up --build`) — public Fly deploy needs a billing method on Fly.io |
 | **Source** | [github.com/Ayushkumarsingh09/Binaris](https://github.com/Ayushkumarsingh09/Binaris) |
 
 Demo credentials (local / self-hosted): `demo@binaris.dev` / `demo-password-change-me`
@@ -200,13 +200,18 @@ GraphQL subset: `POST /graphql`
 
 ## Live deployment
 
-Hosted surfaces are published from this repository:
+| Surface | Host | URL |
+|---|---|---|
+| Landing + diagrams | GitHub Pages (`docs/`) | [ayushkumarsingh09.github.io/Binaris](https://ayushkumarsingh09.github.io/Binaris/) |
+| Analyst workspace | Vercel (`apps/web`) | [binaris-nine.vercel.app](https://binaris-nine.vercel.app) |
+| Analysis API | Docker / Fly.io | `docker compose up --build` → `:8080` · optional `fly deploy` when billing is enabled |
 
-1. **GitHub Pages** — product landing + architecture diagrams → [ayushkumarsingh09.github.io/Binaris](https://ayushkumarsingh09.github.io/Binaris/)
-2. **Vercel** — Next.js workspace (set `NEXT_PUBLIC_BINARIS_API_URL` to the API origin)
-3. **Fly.io** — `binaris-api` container (`infra/docker/Dockerfile.api`)
+Point the hosted UI at your API:
 
-After first deploy, the exact Vercel/Fly URLs are listed on the [live landing page](https://ayushkumarsingh09.github.io/Binaris/) and in repo About links.
+```bash
+# apps/web
+NEXT_PUBLIC_BINARIS_API_URL=https://your-api-host vercel env add NEXT_PUBLIC_BINARIS_API_URL production
+```
 
 ---
 
